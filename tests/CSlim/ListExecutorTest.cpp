@@ -1,6 +1,3 @@
-#include "CppUTest/TestHarness.h"
-
-
 extern "C"
 {
 #include "ListExecutor.h"
@@ -8,6 +5,8 @@ extern "C"
 #include "StatementExecutor.h"
 #include "TestSlim.h"
 }
+
+#include "CppUTest/TestHarness.h"
 
 TEST_GROUP(ListExecutor)
 {
@@ -20,9 +19,9 @@ TEST_GROUP(ListExecutor)
       StatementExecutor_AddFixture(statementExecutor, TestSlim_Register);
       listExecutor = ListExecutor_Create(statementExecutor);
       instructions = SlimList_Create();
-      char * import[] = {"i1", "import", "blah", 0};
+      const char * import[] = {"i1", "import", "blah", 0};
       addStatementTo(instructions, import);
-      char * make[] = {"m1", "make", "test_slim", "TestSlim", 0};
+      const char * make[] = {"m1", "make", "test_slim", "TestSlim", 0};
       addStatementTo(instructions, make);
       
     }
@@ -34,7 +33,7 @@ TEST_GROUP(ListExecutor)
        StatementExecutor_Destroy(statementExecutor);
     }
     
-    void addStatementTo(SlimList* instructions, char** elements)
+    void addStatementTo(SlimList* instructions, const char** elements)
     {
       SlimList* statement = SlimList_Create();
       while (*elements) {
@@ -56,7 +55,7 @@ TEST(ListExecutor, ImportShouldReturnOk)
 
 TEST(ListExecutor, CannotExecuteAnInvalidOperation)
 {
-  char * invalid[] = {"inv1", "Invalid", 0};
+  const char * invalid[] = {"inv1", "Invalid", 0};
   addStatementTo(instructions, invalid);
 
   SlimList * results = ListExecutor_Execute(listExecutor, instructions);
@@ -71,7 +70,7 @@ TEST(ListExecutor, CannotExecuteAnInvalidOperation)
 
 TEST(ListExecutor, CanCallASimpleFunction)
 {
-  char * call[] = {"call1", "call", "test_slim", "returnValue", 0};
+  const char * call[] = {"call1", "call", "test_slim", "returnValue", 0};
   addStatementTo(instructions, call);
 
 
@@ -92,7 +91,7 @@ TEST(ListExecutor, CanCallASimpleFunction)
 
 TEST(ListExecutor, CantExecuteMalformedInstruction)
 {
-  char * call[] = {"call1", "call", "notEnoughArguments", 0};
+  const char * call[] = {"call1", "call", "notEnoughArguments", 0};
   addStatementTo(instructions, call);  
   SlimList * results = ListExecutor_Execute(listExecutor, instructions);
   SlimList * invalidStatementResult = SlimList_GetListAt(results, 2); 
@@ -102,7 +101,7 @@ TEST(ListExecutor, CantExecuteMalformedInstruction)
 
 TEST(ListExecutor, CantCallAmethodOnAnInstanceThatDoesntExist)
 {
-  char * call[] = {"call1", "call", "noSuchInstance", "method", 0};
+  const char * call[] = {"call1", "call", "noSuchInstance", "method", 0};
   addStatementTo(instructions, call);  
   SlimList * results = ListExecutor_Execute(listExecutor, instructions);
   SlimList * invalidStatementResult = SlimList_GetListAt(results, 2); 
@@ -121,8 +120,8 @@ TEST(ListExecutor, ShouldRespondToAnEmptySetOfInstructionsWithAnEmptySetOfResult
 
 TEST(ListExecutor, CanPassArgumentsToConstructor) 
 { 
-  char * make2[] = {"make2", "make", "test_slim2", "TestSlim", "ConstructorArgument", 0};
-  char * call[] = {"call1", "call", "test_slim2", "getConstructionArg", 0};
+  const char * make2[] = {"make2", "make", "test_slim2", "TestSlim", "ConstructorArgument", 0};
+  const char * call[] = {"call1", "call", "test_slim2", "getConstructionArg", 0};
   addStatementTo(instructions, make2);
   addStatementTo(instructions, call);  
   SlimList * results = ListExecutor_Execute(listExecutor, instructions);
@@ -133,9 +132,9 @@ TEST(ListExecutor, CanPassArgumentsToConstructor)
 
 TEST(ListExecutor, CanCallAFunctionMoreThanOnce)
 {
-  char * call[] = {"call1", "call", "test_slim", "echo", "Hello", 0};
+  const char * call[] = {"call1", "call", "test_slim", "echo", "Hello", 0};
   addStatementTo(instructions, call);  
-  char * call2[] = {"call2", "call", "test_slim", "echo", "Goodbye", 0};
+  const char * call2[] = {"call2", "call", "test_slim", "echo", "Goodbye", 0};
   addStatementTo(instructions, call2);  
   
   SlimList * results = ListExecutor_Execute(listExecutor, instructions);
@@ -150,10 +149,10 @@ TEST(ListExecutor, CanCallAFunctionMoreThanOnce)
 
 TEST(ListExecutor, CanAssignTheReturnValueToASymbol)
 {
-  char * call[] = {"id1", "callAndAssign", "v", "test_slim", "add", "x", "y", 0};
+  const char * call[] = {"id1", "callAndAssign", "v", "test_slim", "add", "x", "y", 0};
   addStatementTo(instructions, call);  
 
-  char * call2[] = {"id2", "call", "test_slim", "echo", "$v", 0};
+  const char * call2[] = {"id2", "call", "test_slim", "echo", "$v", 0};
   addStatementTo(instructions, call2);  
 
   SlimList * results = ListExecutor_Execute(listExecutor, instructions);
@@ -168,13 +167,13 @@ TEST(ListExecutor, CanAssignTheReturnValueToASymbol)
 
 TEST(ListExecutor, CanReplateMultipleSymbolsInASingleArgument)
 {
-  char * call[] = {"id1", "callAndAssign", "v1", "test_slim", "echo", "Bob", 0};
+  const char * call[] = {"id1", "callAndAssign", "v1", "test_slim", "echo", "Bob", 0};
   addStatementTo(instructions, call);  
   
-  char * call2[] = {"id2", "callAndAssign", "v2", "test_slim", "echo", "Martin", 0};
+  const char * call2[] = {"id2", "callAndAssign", "v2", "test_slim", "echo", "Martin", 0};
   addStatementTo(instructions, call2);  
   
-  char * call3[] = {"id2", "call", "test_slim", "echo", "name:  $v1 $v2 $12.23", 0};
+  const char * call3[] = {"id2", "call", "test_slim", "echo", "name:  $v1 $v2 $12.23", 0};
   addStatementTo(instructions, call3);  
   
   SlimList * results = ListExecutor_Execute(listExecutor, instructions);
@@ -213,7 +212,7 @@ TEST(ListExecutor, CanPassAndReturnAList)
 
 TEST(ListExecutor, CanReturnNull)
 {
-  char * call[] = {"id1", "call", "test_slim", "null", 0};
+  const char * call[] = {"id1", "call", "test_slim", "null", 0};
   addStatementTo(instructions, call);
   
   SlimList * results = ListExecutor_Execute(listExecutor, instructions);
@@ -227,7 +226,7 @@ TEST(ListExecutor, CanReturnNull)
 
 TEST(ListExecutor, CanPassASymbolInAList)
 {
-  char * call[] = {"id1", "callAndAssign", "v", "test_slim", "echo", "Bob", 0};
+  const char * call[] = {"id1", "callAndAssign", "v", "test_slim", "echo", "Bob", 0};
   addStatementTo(instructions, call);  
     
   SlimList* statement = SlimList_Create();

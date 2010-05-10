@@ -81,7 +81,7 @@ int SlimConnectionHandler_Run(SlimConnectionHandler* self)
 			//execute and get response
 			char* response_message = self->slimHandler(message);
 			int response_length = strlen(response_message);
-			char * response = malloc(response_length + 7);
+			char * response = malloc(response_length + 7 + 1);
 			sprintf(response, "%06d:%s", response_length, response_message);
 			free(response_message);
 			int send_result = self->sendFunc(self->comLink, response, response_length + 7);

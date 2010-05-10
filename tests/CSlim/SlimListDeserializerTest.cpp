@@ -1,4 +1,3 @@
-#include "CppUTest/TestHarness.h"
 #include <stdlib.h>
 #include <memory.h>
 #include <iostream>
@@ -11,11 +10,13 @@ extern "C"
 #include "SlimListSerializer.h"
 }
 
+#include "CppUTest/TestHarness.h"
+
 TEST_GROUP(SlimListDeserializer)
 {
     SlimList* slimList;
 	SlimList* deserializedList;
-	char* serializedList;
+	const char* serializedList;
 
     void setup()
     {
@@ -32,7 +33,7 @@ TEST_GROUP(SlimListDeserializer)
 			SlimList_Destroy(deserializedList);
 			
 		if (serializedList != 0)
-			cpputest_free(serializedList);
+			cpputest_free((void*)serializedList);
     }
 
 	void check_lists_equal(SlimList* expected, SlimList* actual) {
@@ -75,7 +76,7 @@ TEST(SlimListDeserializer, MissingClosingBracketReturnsNull)
 
 TEST(SlimListDeserializer, canDeserializeCanonicalListWithOneElement) 
 {
-	char* canonicalList = "[000001:000008:Hi doug.:]";
+	const char* canonicalList = "[000001:000008:Hi doug.:]";
 	SlimList* deserializedList = SlimList_Deserialize(canonicalList);
 	CHECK(deserializedList != NULL);
 	LONGS_EQUAL(1, SlimList_GetLength(deserializedList));

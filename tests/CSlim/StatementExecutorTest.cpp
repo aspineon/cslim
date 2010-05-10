@@ -1,4 +1,3 @@
-#include "CppUTest/TestHarness.h"
 
 extern "C"
 {
@@ -9,6 +8,9 @@ extern "C"
 #include <string.h>
 #include <stdio.h>
 }
+
+#include "CppUTest/TestHarness.h"
+
 
 TEST_GROUP(StatementExecutor)
 {

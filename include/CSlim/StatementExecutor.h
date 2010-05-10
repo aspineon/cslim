@@ -18,15 +18,15 @@ StatementExecutor* StatementExecutor_Create(void);
 void StatementExecutor_Destroy(StatementExecutor*);
 
 void StatementExecutor_AddFixture(StatementExecutor* executor, Fixture);
-void StatementExecutor_RegisterFixture(StatementExecutor*, char * className, Constructor, Destructor);
-void StatementExecutor_RegisterMethod(StatementExecutor*, char * className, char * methodName, Method);
+void StatementExecutor_RegisterFixture(StatementExecutor*, const char * className, Constructor, Destructor);
+void StatementExecutor_RegisterMethod(StatementExecutor*, const char * className, const char * methodName, Method);
 
-char* StatementExecutor_Make(StatementExecutor*, char* instanceName, char* className, SlimList* args);
-char* StatementExecutor_Call(StatementExecutor*, char* instanceName, char* methodName, SlimList*);
-void* StatementExecutor_Instance(StatementExecutor*, char* instanceName);
-void StatementExecutor_SetSymbol(StatementExecutor*, char* symbol, char* value);
+char* StatementExecutor_Make(StatementExecutor*, const char* instanceName, const char* className, SlimList* args);
+char* StatementExecutor_Call(StatementExecutor*, const char* instanceName, const char* methodName, SlimList*);
+void* StatementExecutor_Instance(StatementExecutor*, const char* instanceName);
+void StatementExecutor_SetSymbol(StatementExecutor*, const char* symbol, const char* value);
 
-void StatementExecutor_ConstructorError(StatementExecutor* executor, char* message);
-char* StatementExecutor_FixtureError(char* message);
+void StatementExecutor_ConstructorError(StatementExecutor* executor, const char* message);
+char* StatementExecutor_FixtureError(const char* message);
 
 #endif  // D_StatementExecutor_H

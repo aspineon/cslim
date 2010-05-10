@@ -1,10 +1,11 @@
-#include "CppUTest/TestHarness.h"
 #include <stdio.h>
 
 extern "C"
 {
 #include "SymbolTable.h"
 }
+
+#include "CppUTest/TestHarness.h"
 
 TEST_GROUP(SymbolTable)
 {
@@ -23,7 +24,7 @@ TEST_GROUP(SymbolTable)
 
 TEST(SymbolTable, findNonExistentSymbolShouldReturnNull)
 {
-	POINTERS_EQUAL(NULL, SymbolTable_FindSymbol(symbolTable, "Hey", 3));
+	POINTERS_EQUAL(NULL, (void*)SymbolTable_FindSymbol(symbolTable, "Hey", 3));
 }
 
 TEST(SymbolTable, findSymbolShouldReturnSymbol)

@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
-char * buyBuf(char* buffer, int length)
+char * buyBuf(const char* buffer, int length)
 {
 	if (buffer == NULL)
 		return NULL;
@@ -10,7 +10,7 @@ char * buyBuf(char* buffer, int length)
 	purchase[length] = 0;
 	return purchase;
 }
-char * buyString(char* string)
+char * buyString(const char* string)
 {
 	if (string == NULL)
 		return NULL;

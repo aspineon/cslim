@@ -48,7 +48,7 @@ void SlimList_Destroy(SlimList* self)
     free(self);
 }
 
-void SlimList_AddBuffer(SlimList* self, char* buffer, int length) 
+void SlimList_AddBuffer(SlimList* self, const char* buffer, int length) 
 {
 	Node* newNode = malloc(sizeof(Node));
 	newNode->next = 0;
@@ -60,7 +60,7 @@ void SlimList_AddBuffer(SlimList* self, char* buffer, int length)
 }
 
 
-void SlimList_AddString(SlimList* self, char* string) 
+void SlimList_AddString(SlimList* self, const char* string) 
 {
 	SlimList_AddBuffer(self, string, string ? strlen(string) : 0);
 }
@@ -126,7 +126,7 @@ char * SlimList_GetStringAt(SlimList* self, int index)
 	return node->string;
 }
 
-void SlimList_ReplaceAt(SlimList* self, int index, char * replacementString)
+void SlimList_ReplaceAt(SlimList* self, int index, const char * replacementString)
 {
 	Node* node = SlimList_GetNodeAt(self, index);
 	if(node->list != 0){

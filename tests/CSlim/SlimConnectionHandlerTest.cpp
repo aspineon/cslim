@@ -1,7 +1,7 @@
-#include "CppUTest/TestHarness.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "CppUTest/TestHarness.h"
 
 extern "C"
 {
@@ -57,7 +57,7 @@ TEST_GROUP(SlimConnectionHandler)
 
 TEST(SlimConnectionHandler, ShouldSendVersion)
 {	
-	comLink.recvStream = "000003:bye";
+	comLink.recvStream = (char*)"000003:bye";
 	comLink.recvPtr = comLink.recvStream;
 
 	SlimConnectionHandler_Run(slimConnectionHandler);
@@ -67,7 +67,7 @@ TEST(SlimConnectionHandler, ShouldSendVersion)
 
 TEST(SlimConnectionHandler, ShouldReadMessageAndCallSlimHandler)
 {
-	comLink.recvStream = "000006:abcdef000003:bye";
+	comLink.recvStream = (char*) "000006:abcdef000003:bye";
 	comLink.recvPtr = comLink.recvStream;
 	
 	slimResponse = (char*)cpputest_malloc(8);

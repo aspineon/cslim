@@ -5,8 +5,8 @@
 
 typedef struct symbolNode {
 	struct symbolNode* next;
-	char* name;
-	char* value;
+	const char* name;
+	const char* value;
 } SymbolNode;
 
 struct SymbolTable
@@ -26,15 +26,15 @@ void SymbolTable_Destroy(SymbolTable* self)
 	SymbolNode* node;
 	for (node = self->head; node;) {
 		SymbolNode* nextSymbolNode = node->next;
-		free(node->name);
-		free(node->value);
+		free((void*)node->name);
+		free((void*)node->value);
 		free(node);
 		node = nextSymbolNode;
 	}	
 	free(self);
 }
 
-char * SymbolTable_FindSymbol(SymbolTable* self, char * name, int length) {
+const char * SymbolTable_FindSymbol(SymbolTable* self, const char * name, int length) {
 	SymbolNode* node;
 	for (node = self->head; node; node = node->next)
 	{
@@ -44,7 +44,7 @@ char * SymbolTable_FindSymbol(SymbolTable* self, char * name, int length) {
 	return NULL;
 }
 
-void SymbolTable_SetSymbol(SymbolTable* self, char* symbol, char* value) {
+void SymbolTable_SetSymbol(SymbolTable* self, const char* symbol, const char* value) {
 	SymbolNode * symbolNode = malloc(sizeof(SymbolNode));
 	symbolNode->name = buyString(symbol);
 	symbolNode->value = buyString(value);
@@ -52,9 +52,9 @@ void SymbolTable_SetSymbol(SymbolTable* self, char* symbol, char* value) {
 	self->head = symbolNode;
 }
 
-int SymbolTable_GetSymbolLength(SymbolTable* self, char* symbol, int length)
+int SymbolTable_GetSymbolLength(SymbolTable* self, const char* symbol, int length)
 {
-	char * symbolValue = SymbolTable_FindSymbol(self, symbol, length);
+	const char * symbolValue = SymbolTable_FindSymbol(self, symbol, length);
 	if (symbolValue == NULL)
 		return -1;
 	return strlen(symbolValue);

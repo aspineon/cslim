@@ -1,4 +1,3 @@
-#include "CppUTest/TestHarness.h"
 #include <stdlib.h>
 #include <memory.h>
 #include <iostream>
@@ -8,6 +7,7 @@ extern "C"
 #include "SlimList.h"
 #include "CppUTest/TestHarness_c.h"
 }
+#include "CppUTest/TestHarness.h"
 
 TEST_GROUP(SlimList)
 {

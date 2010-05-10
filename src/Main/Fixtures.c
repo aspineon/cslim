@@ -5,4 +5,5 @@ FIXTURES
 	FIXTURE(Count)
 	FIXTURE(EmployeePayRecordsRow)
 	FIXTURE(ExceptionsExample)
+	FIXTURE(EnvironmentScenario)
 END

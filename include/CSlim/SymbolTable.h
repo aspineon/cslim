@@ -11,7 +11,7 @@ typedef struct SymbolTable SymbolTable;
 
 SymbolTable* SymbolTable_Create(void);
 void SymbolTable_Destroy(SymbolTable*);
-char * SymbolTable_FindSymbol(SymbolTable* self, char * name, int length);
-void SymbolTable_SetSymbol(SymbolTable* self, char* symbol, char* value);
-int SymbolTable_GetSymbolLength(SymbolTable* self, char* symbol, int length);
+const char * SymbolTable_FindSymbol(SymbolTable* self, const char * name, int length);
+void SymbolTable_SetSymbol(SymbolTable* self, const char* symbol, const char* value);
+int SymbolTable_GetSymbolLength(SymbolTable* self, const char* symbol, int length);
 #endif  // D_SymbolTable_H
